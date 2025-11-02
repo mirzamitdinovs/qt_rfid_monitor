@@ -1,35 +1,23 @@
 #include <QApplication>
-#include <QGuiApplication>
-#include <QScreen>
 #include <QFontDatabase>
-#include <QFile>     // ← add
-#include <QIODevice> // ← add
 #include "app/AppWindow.h"
 
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
-  // Load Korean font
-  QFontDatabase::addApplicationFont(":/fonts/NotoSansKR-Regular.ttf");
-  app.setFont(QFont("Noto Sans CJK KR, Noto Sans KR, Malgun Gothic, Apple SD Gothic Neo, Nanum Gothic", 11));
-
-  // Global QSS
-  QFile f(":/styles/app.qss");
-  if (f.open(QIODevice::ReadOnly))
+  // ✅ Load embedded Korean font
+  const int id = QFontDatabase::addApplicationFont(":/fonts/NotoSansKR-Regular.ttf");
+  if (id >= 0)
   {
-    app.setStyleSheet(QString::fromUtf8(f.readAll()));
-    f.close();
+    const auto fam = QFontDatabase::applicationFontFamilies(id).value(0);
+    if (!fam.isEmpty())
+      QApplication::setFont(QFont(fam));
   }
 
+  // ✅ AppWindow creates its own MySqlDataProvider or fallback internally
   AppWindow w;
-
-  // Start in centered normal size (≤1200 x 800)
-  const QRect avail = QGuiApplication::primaryScreen()->availableGeometry();
-  const int targetW = qMin(1200, avail.width() - 2);
-  const int targetH = qMin(800, avail.height() - 2);
-  w.resize(targetW, targetH);
-  w.move(avail.center() - QPoint(targetW / 2, targetH / 2));
+  w.resize(1200, 800);
   w.show();
 
   return app.exec();

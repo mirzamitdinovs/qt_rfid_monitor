@@ -1,4 +1,3 @@
-// src/app/AppWindow.cpp
 #include "AppWindow.h"
 
 #include <QVBoxLayout>
@@ -8,24 +7,39 @@
 #include <QScreen>
 #include <QStackedWidget>
 #include <QPushButton>
-#include <QMenuBar>   // ← required to call menuBar()
-#include <QStatusBar> // ← required to call statusBar()
+#include <QMenuBar>
+#include <QStatusBar>
+#include <QLabel>
+#include <QDebug>
 
 #include "../pages/DashboardPage.h"
 #include "../pages/SearchPage.h"
 #include "../data/InMemoryDataProvider.h"
+#include "../data/MySqlDataProvider.h"
 
 AppWindow::AppWindow(QWidget *parent) : QMainWindow(parent)
 {
-  // Hide bars if they exist; need <QMenuBar>/<QStatusBar> includes
   if (menuBar())
     menuBar()->hide();
   if (statusBar())
     statusBar()->hide();
   setContentsMargins(0, 0, 0, 0);
 
-  // Data provider (in-memory for now; swap to MySQL later)
-  data_ = new InMemoryDataProvider(this);
+  // Try MySQL; fallback to memory so the app always runs
+  {
+    auto *mysql = new MySqlDataProvider(this);
+    if (mysql->healthy())
+    {
+      qInfo() << "[Provider] Using MySQL provider";
+      data_ = mysql;
+    }
+    else
+    {
+      qWarning() << "[Provider] MySQL unavailable; falling back to InMemory";
+      mysql->deleteLater();
+      data_ = new InMemoryDataProvider(this);
+    }
+  }
 
   auto *central = new QWidget(this);
   auto *v = new QVBoxLayout(central);
@@ -60,7 +74,7 @@ QWidget *AppWindow::buildTopNav()
 
   h->addWidget(btnDash_);
   h->addWidget(btnSearch_);
-  h->addStretch(1);
+  h->addStretch(1); // keep right side empty (no connection widget)
 
   connect(btnDash_, &QPushButton::clicked, this, &AppWindow::showDashboard);
   connect(btnSearch_, &QPushButton::clicked, this, &AppWindow::showSearch);
@@ -89,14 +103,8 @@ void AppWindow::showSearch()
   style()->polish(btnSearch_);
 }
 
-void AppWindow::applyNormalConstraints()
-{
-  setMaximumWidth(1200); // cap width in normal state
-}
-void AppWindow::clearConstraints()
-{
-  setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-}
+void AppWindow::applyNormalConstraints() { setMaximumWidth(1200); }
+void AppWindow::clearConstraints() { setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX); }
 
 void AppWindow::changeEvent(QEvent *e)
 {
@@ -104,8 +112,8 @@ void AppWindow::changeEvent(QEvent *e)
   {
     const auto st = windowState();
     const bool isFs = st.testFlag(Qt::WindowFullScreen);
-    const bool isMax = st.testFlag(Qt::WindowMaximized);
-    if (isFs || isMax)
+    const bool isMx = st.testFlag(Qt::WindowMaximized);
+    if (isFs || isMx)
     {
       clearConstraints();
     }

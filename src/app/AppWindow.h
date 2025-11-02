@@ -3,7 +3,7 @@
 #include <QStackedWidget>
 #include <QPushButton>
 
-class DataProvider; // fwd
+class DataProvider;
 
 class AppWindow : public QMainWindow
 {
@@ -13,6 +13,7 @@ public:
 
 protected:
   void changeEvent(QEvent *e) override;
+
 private slots:
   void showDashboard();
   void showSearch();
