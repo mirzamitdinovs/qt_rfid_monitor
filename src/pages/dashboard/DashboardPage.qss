@@ -1,0 +1,52 @@
+/* Container background handled by app; this page focuses on its own widgets */
+
+/* Card container */
+#Card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* Header */
+#HeaderTitle { font-size: 18px; font-weight: 600; color: #1a1a1a; }
+
+#StatusBadge { }
+#StatusDot   { background: #4ade80; border-radius: 3px; }
+#StatusText  { font-size: 13px; color: #666; }
+
+/* Center count */
+#HeaderCenter { }
+#CountBox     { background: #f0f4f8; border-radius: 12px; }
+#CountNumber  { font-size: 48px; font-weight: 800; color: #000; }
+#CountUnit    { font-size: 14px; color: #999; }
+
+/* Right side */
+#RefreshBtn {
+  background: #f0f4f8; border: none; border-radius: 8px;
+  padding: 8px 20px; color: #333;
+}
+#RefreshBtn:hover { background: #e0e8f0; }
+#Timestamp { font-size: 13px; color: #666; }
+
+/* Table card */
+#TableTitle { font-size: 16px; font-weight: 600; color: #1a1a1a; margin-bottom: 12px; }
+
+QHeaderView::section {
+  background: #fafafa; color: #666; border: none;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 12px 16px; font-size: 13px; font-weight: 600;
+}
+QTableView#DataTable { border: none; background: transparent; }
+QTableView#DataTable::item {
+  padding: 14px 16px; font-size: 13px; color: #333;
+  border-bottom: 1px solid #f0f0f0;
+}
+QTableView#DataTable::item:selected { background: #fafafa; }
+
+/* Pagination footer */
+#Pagination {
+  margin-top: 16px;
+  border-top: 1px solid #e5e5e5;
+  background: transparent;
+}
+#PaginationText { color: #999; font-size: 13px; }

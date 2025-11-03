@@ -24,10 +24,10 @@ add_executable(${PROJECT_NAME}
   src/app/AppWindow.h
 
   # Pages
-  src/pages/DashboardPage.cpp
-  src/pages/DashboardPage.h
-  src/pages/SearchPage.cpp
-  src/pages/SearchPage.h
+  src/pages/dashboard/DashboardPage.cpp
+  src/pages/dashboard/DashboardPage.h
+  src/pages/search/SearchPage.cpp
+  src/pages/search/SearchPage.h
 
   # Data providers
   src/data/DataProvider.h

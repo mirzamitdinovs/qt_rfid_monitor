@@ -1,0 +1,65 @@
+/* Card shell */
+#Card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Titles */
+#PageTitle { font-size: 28px; font-weight: 700; color: #222; }
+#PageSubtitle { font-size: 14px; color: #999; }
+#SectionTitle { font-size: 16px; font-weight: 700; color: #222; }
+
+/* Tabs */
+#Tab, #TabActive {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 600;
+}
+#Tab:hover { border-color: #999; }
+#TabActive { background: #e8f1ff; border-color: #4a90e2; color: #4a90e2; }
+
+/* Inputs */
+#FieldLabel { font-size: 14px; font-weight: 600; color: #222; }
+QLineEdit#Input {
+  padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; background: #fff; font-size: 13px;
+}
+QLineEdit#Input:focus {
+  border: 1px solid #4a90e2;
+}
+
+/* Search button */
+#SearchBtn {
+  padding: 10px 20px; border: 1px solid #ddd; border-radius: 6px;
+  background: #f0f0f0; color: #666; font-weight: 600;
+}
+#SearchBtn:hover { background: #e8e8e8; }
+
+/* Columns bar */
+#ColumnsBar { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 8px; }
+#ColumnsTitle { font-size: 14px; font-weight: 700; color: #222; }
+
+/* Table */
+QHeaderView::section {
+  background: #f9f9f9; color: #666; border: none; border-bottom: 1px solid #e0e0e0;
+  padding: 12px 16px; font-size: 13px; font-weight: 600;
+}
+QTableView#DataTable { border: 1px solid #e0e0e0; border-radius: 6px; background: #fff; }
+QTableView#DataTable::item {
+  padding: 12px 16px; font-size: 13px; color: #333; border-bottom: 1px solid #f0f0f0;
+}
+QTableView#DataTable::item:selected { background: #f9f9f9; }
+
+/* Footer bar */
+#FooterBar {
+  display: block; /* Qt ignores display but keeps id for style scoping */
+  background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 8px;
+}
+#TotalCount { font-size: 14px; color: #666; font-weight: 600; }
+#PrimaryBtn {
+  padding: 12px 32px; background: #4a90e2; color: #fff; border-radius: 8px; border: none; font-weight: 700;
+}
+#PrimaryBtn:hover { background: #3a7bc8; }

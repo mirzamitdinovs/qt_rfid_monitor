@@ -1,4 +1,6 @@
 #include "AppWindow.h"
+#include <QStyle>
+#include <QApplication>
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -12,8 +14,8 @@
 #include <QLabel>
 #include <QDebug>
 
-#include "../pages/DashboardPage.h"
-#include "../pages/SearchPage.h"
+#include "../pages/dashboard/DashboardPage.h"
+#include "../pages/search/SearchPage.h"
 #include "../data/InMemoryDataProvider.h"
 #include "../data/MySqlDataProvider.h"
 

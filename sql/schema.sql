@@ -1,17 +1,23 @@
-CREATE DATABASE IF NOT EXISTS rfid_demo CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE rfid_demo;
-
--- Table 1: current number of workers (store one row)
+-- schema.sql
 CREATE TABLE IF NOT EXISTS current_workers (
-  id          INT PRIMARY KEY DEFAULT 1,
+  id INT PRIMARY KEY AUTO_INCREMENT,
   count_value INT NOT NULL
 );
 
--- Table 2: list of workers inside the area
 CREATE TABLE IF NOT EXISTS area_workers (
-  id           INT AUTO_INCREMENT PRIMARY KEY,
-  check_time   DATETIME NOT NULL,  -- when observed inside area
-  name         VARCHAR(100) NOT NULL,
-  phone_masked VARCHAR(32)  NOT NULL,
-  memo         VARCHAR(255) NULL
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  check_time DATETIME NOT NULL,
+  name VARCHAR(100) NOT NULL,
+  phone_masked VARCHAR(32),
+  memo VARCHAR(255) DEFAULT ''
 );
+
+-- seed
+INSERT INTO current_workers (count_value) VALUES (27);
+
+INSERT INTO area_workers (check_time, name, phone_masked, memo) VALUES
+  (NOW(),                      '김민수', '010-****-****', ''),
+  (NOW() - INTERVAL 3 MINUTE,  '이세종', '010-****-****', ''),
+  (NOW() - INTERVAL 10 MINUTE, '이수연', '010-****-****', ''),
+  (NOW() - INTERVAL 16 MINUTE, '박이산', '010-****-****', ''),
+  (NOW() - INTERVAL 21 MINUTE, '이순신', '010-****-****', '');
